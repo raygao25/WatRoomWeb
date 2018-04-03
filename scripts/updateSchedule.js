@@ -4,9 +4,9 @@
 const fs = require('fs');
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-const firebase = require("firebase");
+const firebase = require('firebase');
 // Required for side-effects
-require("firebase/firestore");
+require('firebase/firestore');
 
 
 const apiKey = '1d3601c707009302a62ff0a71f250867';
@@ -16,8 +16,8 @@ const getCurrentTerm = () => {
 	const year = date.getFullYear().toString().substring(2);
 	const month = date.getMonth() + 1;
 	const termStartingMonth = month >= 9 ? 9 : (month >= 5 ? 5 : 1);
-	return '1' + year + termStartingMonth.toString();
-}
+	return `1${  year  }${termStartingMonth.toString()}`;
+};
 
 const currentTerm = getCurrentTerm();
 console.log('currentTerm', currentTerm);
@@ -28,15 +28,16 @@ const classroomListObj = JSON.parse(classroomList);
 
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyAe0tfbWgCRhTgY5ffByTHr4xDzBb4K9W8',
-  authDomain: 'classroom-finder-245e0.firebaseapp.com',
-  projectId: 'classroom-finder-245e0'
+	apiKey: 'AIzaSyAe0tfbWgCRhTgY5ffByTHr4xDzBb4K9W8',
+	authDomain: 'classroom-finder-245e0.firebaseapp.com',
+	projectId: 'classroom-finder-245e0',
 });
 
 const db = firebase.firestore();
 
 const updateRoomSchedule = (courses, building, room) => {
-	db.collection('classroomData').doc(building).collection('rooms').doc(room).get()
+	db.collection('classroomData').doc(building).collection('rooms').doc(room)
+.get()
 		.then((res) => {
 			const weeklySchedule = res.data().schedule;
 			courses.forEach((course) => {
@@ -53,7 +54,7 @@ const updateRoomSchedule = (courses, building, room) => {
 					} else if (weekdays[i] === 'F') {
 						day = 'Friday';
 					} else if (weekdays[i] === 'T') {
-						if (i < strlen - 1 && weekdays[i+1] === 'h') {
+						if (i < strlen - 1 && weekdays[i + 1] === 'h') {
 							day = 'Thursday';
 						} else {
 							day = 'Tuesday';
@@ -64,12 +65,13 @@ const updateRoomSchedule = (courses, building, room) => {
 					}
 				}
 			});
-			db.collection('classroomData').doc(building).collection('rooms').doc(room).update({
+			db.collection('classroomData').doc(building).collection('rooms').doc(room)
+.update({
 				schedule: weeklySchedule,
 			});
 		})
 		.catch((err) => console.log('Firestore get room data failed', err));
-}
+};
 
 Object.keys(classroomListObj).forEach((building) => {
 	const classrooms = classroomListObj[building];
@@ -80,6 +82,6 @@ Object.keys(classroomListObj).forEach((building) => {
 				const courses = res.data;
 				updateRoomSchedule(courses, building, room);
 			});
-	})
+	});
 });
 

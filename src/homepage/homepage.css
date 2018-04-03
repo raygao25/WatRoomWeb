@@ -1,24 +1,8 @@
 .HomePage {
-  text-align: center;
+	text-align: center;
+	padding-top: 200px;
 }
 
-.HomePage-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.HomePage-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.HomePage-title {
-  font-size: 1.5em;
-}
-
-.HomePage-intro {
-  font-size: large;
-}
-
+/* .TimePicker {
+	width: 500px;
+} */

@@ -8,18 +8,18 @@ import { createEpicMiddleware } from 'redux-observable';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './index.css';
-import HomePage from './homepage/homepage';
+import HomePage from './homepage/homepage.container';
 import registerServiceWorker from './registerServiceWorker';
-// import rootReducer from '';
-// import rootEpic from '';
+import rootReducer from './reducer/root.reducer';
+import rootEpic from './middleware/root.epics';
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const epicMiddleware = createEpicMiddleware(rootEpic);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const epicMiddleware = createEpicMiddleware(rootEpic);
 
-const store = 0;// = createStore(
-// 	rootReducer,
-// 	composeEnhancers(applyMiddleware(epicMiddleware)),
-// );
+const store = createStore(
+	rootReducer,
+	composeEnhancers(applyMiddleware(epicMiddleware)),
+);
 
 ReactDOM.render(
 	<Provider store={store}>
