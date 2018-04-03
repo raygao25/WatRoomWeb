@@ -1,9 +1,12 @@
 const functions = require('firebase-functions');
 // The Firebase Admin SDK to access the Firestore.
 const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+const express = require('express');
 
-const db = admin.firestore();
+const app = express();
+const cors = require('cors')({ origin: true });
+
+app.use(cors);
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
 	return response.json({
@@ -11,7 +14,11 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 	});
 });
 
-exports.queryAllAvailableRooms = functions.https.onRequest((request, response) => {
+admin.initializeApp(functions.config().firebase);
+
+const db = admin.firestore();
+
+app.get('', (request, response) => {
 	// query parameters
 	const { weekday } = request.query;
 	const startTime = parseInt(request.query.startTime, 10);
@@ -25,7 +32,7 @@ exports.queryAllAvailableRooms = functions.https.onRequest((request, response) =
 			Promise.all(res.docs.map((doc) => {
 				const building = doc.id;
 				const { latitude, longitude, name } = doc.data();
-				
+
 				return db.collection('classroomData').doc(building).collection('rooms').get()
 					.then((querySnapShot) => {
 						const roomDocs = querySnapShot.docs.map((doc) => doc.data());
@@ -50,10 +57,17 @@ exports.queryAllAvailableRooms = functions.https.onRequest((request, response) =
 					})
 					.catch((err) => res.status(500).send('Internal error', err));
 			}))
-			.then(() => response.json({
-				availableRoomsSet,
-			}))
-			.catch((err) => res.status(500).send('Internal error', err))
+				.then(() => response.json({
+					availableRoomsSet,
+				}))
+				.catch((err) => res.status(500).send('Internal error', err))
 		)
 		.catch((err) => res.status(500).send('Internal error', err));
+});
+
+exports.queryAllAvailableRooms = functions.https.onRequest((request, response) => {
+	if (!request.path) {
+		request.url = `/${request.url}`; // prepend '/' to keep query params if any
+	}
+	return app(request, response);
 });
