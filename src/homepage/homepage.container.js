@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 
 import homepage from './homepage';
 import {
@@ -28,10 +29,10 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 	search: searchAvailableRooms.start,
 }, dispatch);
 
-const HomePage = connect(
+const HomePage = withRouter(connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(homepage);
+)(homepage));
 
 export default HomePage;
 

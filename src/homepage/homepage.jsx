@@ -16,7 +16,7 @@ class HomePage extends Component {
 	 * Called before component is mounted
 	 */
 	componentWillMount() {
-
+		console.log(this.props);
 	}
 
 	/**
@@ -60,6 +60,7 @@ class HomePage extends Component {
 				<div className="TimePicker">
 					<TimePicker
 						hintText="Start time"
+						autoOk
 						format="24hr"
 						minutesStep={10}
 						onChange={this.handleStartTimeChange}
@@ -70,6 +71,7 @@ class HomePage extends Component {
 					<FontIcon className="material-icons" style={{ paddingLeft: 30, paddingRight: 30 }}>arrow_forward</FontIcon>
 					<TimePicker
 						hintText="End time"
+						autoOk
 						format="24hr"
 						minutesStep={10}
 						onChange={this.handleEndTimeChange}

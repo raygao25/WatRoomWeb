@@ -1,5 +1,9 @@
+import { combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { ajax } from 'rxjs/observable/dom/ajax';
+import { push } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
+
 import * as firebase from 'firebase';
 import 'firebase/functions';
 
@@ -13,13 +17,14 @@ firebase.initializeApp({
 
 const url = 'https://us-central1-classroom-finder-245e0.cloudfunctions.net/queryAllAvailableRooms';
 
+const history = createHistory();
 /**
  *
  */
 const searchAvailableRoomsEpic = (action$, store) =>
 	action$.ofType(searchAvailableRooms.START)
 		.mergeMap(() => {
-			const { searchParams } = store.getState();
+			const { searchParams } = store.getState().app;
 			const { weekday } = searchParams;
 			const startTime = ((searchParams.startTime.hours - 8) * 6) + (searchParams.startTime.minutes / 10);
 			const length = ((searchParams.endTime.hours - searchParams.startTime.hours) * 6) +
@@ -34,4 +39,14 @@ const searchAvailableRoomsEpic = (action$, store) =>
 				}));
 		});
 
-export default searchAvailableRoomsEpic;
+/**
+ * Changes the route
+ */
+const showResultsEpic = (action$) =>
+	action$.ofType(searchAvailableRooms.SUCCESS)
+		.map(() => push('/results'));
+
+
+const searchEpic = combineEpics(searchAvailableRoomsEpic, showResultsEpic);
+
+export default searchEpic;

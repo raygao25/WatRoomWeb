@@ -1,7 +1,7 @@
 import { combineEpics } from 'redux-observable';
-import searchAvailableRoomsEpic from './search.epics';
+import searchEpic from './search.epics';
 
 
-const rootEpic = combineEpics(searchAvailableRoomsEpic);
+const rootEpic = combineEpics(searchEpic);
 
 export default rootEpic;

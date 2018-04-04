@@ -4,17 +4,17 @@ import { createSelector } from 'reselect';
 /**
  * Get weekday from state
  */
-const weekdaySelector = (state) => state.searchParams.weekday;
+const weekdaySelector = (state) => state.app.searchParams.weekday;
 
 /**
  * Get start time from state
  */
-const startTimeSelector = (state) => state.searchParams.startTime;
+const startTimeSelector = (state) => state.app.searchParams.startTime;
 
 /**
  * Get end time from state
  */
-const endTimeSelector = (state) => state.searchParams.endTime;
+const endTimeSelector = (state) => state.app.searchParams.endTime;
 
 /**
  * Validate if user has entered all required fields
