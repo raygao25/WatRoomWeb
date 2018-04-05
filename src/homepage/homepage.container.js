@@ -18,6 +18,8 @@ import { searchValidator } from '../selectors/selector';
 const mapStateToProps = (state) => ({
 	isReadyToSearch: searchValidator(state),
 	today: state.searchParams.date,
+	startTime: state.searchParams.startTime,
+	endTime: state.searchParams.endTime,
 });
 
 /**

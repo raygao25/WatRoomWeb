@@ -22,12 +22,17 @@ const endTimeSelector = (state) => state.searchParams.endTime;
 export const searchValidator = createSelector(
 	[weekdaySelector, startTimeSelector, endTimeSelector],
 	(weekday, startTime, endTime) => {
+		if (!weekday || !startTime || !endTime) return false;
+		const startTimeHours = startTime.getHours();
+		const startTimeMinutes = startTime.getMinutes();
+		const endTimeHours = endTime.getHours();
+		const endTimeMinutes = endTime.getMinutes();
 		if (weekday && startTime && endTime) {
-			if (startTime.hours >= 8 && (endTime.hours <= 21 || (endTime.hours === 22 && endTime.minutes === 0))) {
-				if (endTime.hours > startTime.hours) {
+			if (startTimeHours >= 8 && (endTimeHours <= 21 || (endTimeHours === 22 && endTimeMinutes === 0))) {
+				if (endTimeHours > startTimeHours) {
 					return true;
-				} else if (startTime.hours === endTime.hours) {
-					if (endTime.minutes > startTime.minutes) {
+				} else if (startTimeHours === endTimeHours) {
+					if (endTimeMinutes > startTimeMinutes) {
 						return true;
 					}
 				}

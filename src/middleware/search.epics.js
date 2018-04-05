@@ -26,10 +26,10 @@ const searchAvailableRoomsEpic = (action$, store) =>
 		.mergeMap(() => {
 			const { searchParams } = store.getState();
 			const { weekday } = searchParams;
-			const startTime = ((searchParams.startTime.hours - 8) * 6) + (searchParams.startTime.minutes / 10);
-			const length = ((searchParams.endTime.hours - searchParams.startTime.hours) * 6) +
-			((searchParams.endTime.minutes - searchParams.startTime.minutes) / 10);
-			return ajax.getJSON(`${url}?weekday=${weekday}&startTime=${startTime}&length=${length}`)
+			const startTimeIndex = ((searchParams.startTime.getHours() - 8) * 6) + (searchParams.startTime.getMinutes() / 10);
+			const length = ((searchParams.endTime.getHours() - searchParams.startTime.getHours()) * 6) +
+			((searchParams.endTime.getMinutes() - searchParams.startTime.getMinutes()) / 10);
+			return ajax.getJSON(`${url}?weekday=${weekday}&startTime=${startTimeIndex}&length=${length}`)
 				.map((result) =>
 					searchAvailableRooms.success(result))
 				.catch((err) => Observable.of({

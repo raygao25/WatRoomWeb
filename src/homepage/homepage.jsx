@@ -13,13 +13,6 @@ import './homepage.css';
  */
 class HomePage extends Component {
 	/**
-	 * Called before component is mounted
-	 */
-	componentWillMount() {
-		console.log(this.props);
-	}
-
-	/**
 	 * Method to handle date change
 	 */
 	handleDateChange = (unused, date) => {
@@ -30,30 +23,29 @@ class HomePage extends Component {
 	 * Method to handle start time change
 	 */
 	handleStartTimeChange = (event, date) => {
-		const hours = date.getHours();
-		const minutes = date.getMinutes();
-		this.props.setStartTime({ hours, minutes });
+		this.props.setStartTime(date);
 	}
 
 	/**
 	 * Method to handle end time change
 	 */
 	handleEndTimeChange = (event, date) => {
-		const hours = date.getHours();
-		const minutes = date.getMinutes();
-		this.props.setEndTime({ hours, minutes });
+		this.props.setEndTime(date);
 	}
 
 	/**
 	 * Render method
 	 */
 	render() {
+		const {
+			today, startTime, endTime, isReadyToSearch, search,
+		} = this.props;
 		return (
 			<div className="HomePage">
 				<DatePicker
 					hintText="Date"
 					autoOk
-					defaultDate={this.props.today}
+					defaultDate={today}
 					style={{ textAlign: 'center' }}
 					shouldDisableDate={(date) => date.getDay() === 0 || date.getDay() === 6} // Disable weekends
 					onChange={this.handleDateChange}
@@ -62,6 +54,7 @@ class HomePage extends Component {
 					<TimePicker
 						hintText="Start time"
 						autoOk
+						defaultTime={startTime}
 						format="24hr"
 						minutesStep={10}
 						onChange={this.handleStartTimeChange}
@@ -73,6 +66,7 @@ class HomePage extends Component {
 					<TimePicker
 						hintText="End time"
 						autoOk
+						defaultTime={endTime}
 						format="24hr"
 						minutesStep={10}
 						onChange={this.handleEndTimeChange}
@@ -84,8 +78,8 @@ class HomePage extends Component {
 				<RaisedButton
 					label="Search"
 					primary
-					onClick={() => this.props.search()}
-					disabled={!this.props.isReadyToSearch}
+					onClick={() => search()}
+					disabled={!isReadyToSearch}
 					style={{
 						width: 200,
 						marginTop: 30,
@@ -97,11 +91,23 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-	isReadyToSearch: PropTypes.bool,
-	setDate: PropTypes.func,
-	setStartTime: PropTypes.func,
-	setEndTime: PropTypes.func,
-	search: PropTypes.func,
+	today: PropTypes.shape({
+		getHours: PropTypes.func,
+		getMinutes: PropTypes.func,
+	}),
+	startTime: PropTypes.shape({
+		getHours: PropTypes.func,
+		getMinutes: PropTypes.func,
+	}),
+	endTime: PropTypes.shape({
+		getHours: PropTypes.func,
+		getMinutes: PropTypes.func,
+	}),
+	isReadyToSearch: PropTypes.bool.isRequired,
+	setDate: PropTypes.func.isRequired,
+	setStartTime: PropTypes.func.isRequired,
+	setEndTime: PropTypes.func.isRequired,
+	search: PropTypes.func.isRequired,
 };
 
 export default HomePage;
