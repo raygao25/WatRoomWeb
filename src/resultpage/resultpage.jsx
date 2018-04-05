@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 /** */
-const ResultPage = (props) => (
-	<div>
-		<h1>
-			Result Page
-		</h1>
-	</div>
-);
+class ResultPage extends Component {
+	/**
+	 * Called before component is mounted
+	 */
+	componentWillMount() {
+		console.log('ResultPage', this.props);
+	}
+
+	/** */
+	shouldComponentUpdate() {
+		console.log('ResultPage update', this.props);
+	}
+
+	/** */
+	render() {
+		return (
+			<div>
+				<h1>
+					Result Page
+				</h1>
+			</div>
+		);
+	}
+}
 
 export default ResultPage;

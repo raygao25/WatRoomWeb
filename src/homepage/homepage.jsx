@@ -53,6 +53,7 @@ class HomePage extends Component {
 				<DatePicker
 					hintText="Date"
 					autoOk
+					defaultDate={this.props.today}
 					style={{ textAlign: 'center' }}
 					shouldDisableDate={(date) => date.getDay() === 0 || date.getDay() === 6} // Disable weekends
 					onChange={this.handleDateChange}
