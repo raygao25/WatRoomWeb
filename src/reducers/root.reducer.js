@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import searchParams from './search.reducer';
+import search from './search.reducer';
 
 const rootReducer = combineReducers({
-	searchParams,
+	search,
 });
 
 export default rootReducer;

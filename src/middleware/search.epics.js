@@ -31,7 +31,7 @@ const searchAvailableRoomsEpic = (action$, store) =>
 			((searchParams.endTime.getMinutes() - searchParams.startTime.getMinutes()) / 10);
 			return ajax.getJSON(`${url}?weekday=${weekday}&startTime=${startTimeIndex}&length=${length}`)
 				.map((result) =>
-					searchAvailableRooms.success(result))
+					searchAvailableRooms.success(result.availableRoomsSet))
 				.catch((err) => Observable.of({
 					type: 'FETCH_TAGS_FAILED',
 					payload: err.xhr.response,

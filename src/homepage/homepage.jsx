@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import './homepage.css';
 
@@ -38,7 +39,7 @@ class HomePage extends Component {
 	 */
 	render() {
 		const {
-			today, startTime, endTime, isReadyToSearch, search,
+			today, startTime, endTime, isReadyToSearch, search, loading,
 		} = this.props;
 		return (
 			<div className="HomePage">
@@ -75,16 +76,31 @@ class HomePage extends Component {
 						}}
 					/>
 				</div>
-				<RaisedButton
+				<Button
 					label="Search"
+					labelPosition="before"
 					primary
 					onClick={() => search()}
-					disabled={!isReadyToSearch}
+					disabled={!isReadyToSearch || loading}
+					disabledBackgroundColor="#80DEEA"
+					overlayStyle={{
+						paddingLeft: loading ? 34 : 0,
+					}}
 					style={{
 						width: 200,
 						marginTop: 30,
 					}}
-				/>
+				>
+					{loading && <CircularProgress
+						size={25}
+						color="#E0F7FA"
+						style={{
+							marginTop: 5,
+							marginRight: 10,
+							float: 'right',
+						}}
+					/>}
+				</Button>
 			</div>
 		);
 	}
@@ -108,6 +124,7 @@ HomePage.propTypes = {
 	setStartTime: PropTypes.func.isRequired,
 	setEndTime: PropTypes.func.isRequired,
 	search: PropTypes.func.isRequired,
+	loading: PropTypes.bool.isRequired,
 };
 
 export default HomePage;

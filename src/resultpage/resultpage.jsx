@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import MapView from './mapview';
 
 /** */
 class ResultPage extends Component {
@@ -16,14 +19,17 @@ class ResultPage extends Component {
 
 	/** */
 	render() {
+		const { availableRooms } = this.props;
 		return (
 			<div>
-				<h1>
-					Result Page
-				</h1>
+				<MapView availableRooms={availableRooms} />
 			</div>
 		);
 	}
 }
+
+ResultPage.propTypes = {
+	availableRooms: PropTypes.shape(),
+};
 
 export default ResultPage;

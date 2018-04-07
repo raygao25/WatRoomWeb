@@ -10,7 +10,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
 import RootRouter from './router';
 import registerServiceWorker from './registerServiceWorker';
-import app from './reducers/root.reducer';
+import rootReducer from './reducers/search.reducer';
 import rootEpic from './middleware/root.epics';
 import history from './history';
 
@@ -20,7 +20,7 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 
 
 const store = createStore(
-	app,
+	rootReducer,
 	composeEnhancers(applyMiddleware(epicMiddleware)),
 );
 

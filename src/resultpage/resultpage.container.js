@@ -6,7 +6,8 @@ import resultpage from './resultpage';
 /**
  * mapStateToProps
  */
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+	availableRooms: state.result.availableRooms,
 });
 
 const ResultPage = withRouter(connect(mapStateToProps)(resultpage));

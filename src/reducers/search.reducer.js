@@ -1,7 +1,10 @@
+import { combineReducers } from 'redux';
+
 import {
 	setDate,
 	setStartTime,
 	setEndTime,
+	searchAvailableRooms,
 } from '../actions/action';
 
 
@@ -48,4 +51,55 @@ const searchParams = (state = initialSearchState(), action) => {
 	}
 };
 
-export default searchParams;
+/**
+ * Reducer for loading state
+ */
+const loading = (state = { loading: false }, action) => {
+	switch (action.type) {
+		case searchAvailableRooms.START:
+			return {
+				...state,
+				loading: true,
+			};
+		case searchAvailableRooms.SUCCESS:
+			return {
+				...state,
+				loading: false,
+			};
+		default:
+			return state;
+	}
+};
+
+/**
+ *
+ */
+const result = (state = {
+	availableRooms: {
+		DC: {
+			latitude: 43.472761,
+			longitude: -80.542164,
+			name: 'William G. Davis Computer Research Centre',
+		},
+		MC: {
+			latitude: 43.47207511,
+			longitude: -80.54394739,
+			name: 'Mathematics & Computer Building',
+		},
+	},
+}, action) => {
+	const { payload } = action;
+	switch (action.type) {
+		case searchAvailableRooms.SUCCESS:
+			return {
+				...state,
+				availableRooms: payload,
+			};
+		default:
+			return state;
+	}
+};
+
+const search = combineReducers({ searchParams, loading, result });
+
+export default search;
