@@ -17,10 +17,10 @@ const initialSearchState = () => {
 	const today = new Date();
 	const todayWeekday = today.getDay();
 	return {
-		weekday: todayWeekday !== 0 && todayWeekday !== 6 ? weekdays[todayWeekday] : null,
-		date: todayWeekday !== 0 && todayWeekday !== 6 ? today : null,
-		startTime: null,
-		endTime: null,
+		weekday: todayWeekday !== 0 && todayWeekday !== 6 ? weekdays[todayWeekday] : undefined,
+		date: todayWeekday !== 0 && todayWeekday !== 6 ? today : undefined,
+		startTime: undefined,
+		endTime: undefined,
 	};
 };
 
@@ -75,18 +75,32 @@ const loading = (state = { loading: false }, action) => {
  *
  */
 const result = (state = {
-	availableRooms: {
-		DC: {
+	availableRooms: [
+		{
+			code: 'DC',
 			latitude: 43.472761,
 			longitude: -80.542164,
 			name: 'William G. Davis Computer Research Centre',
+			numberOfRooms: 3,
+			rooms: ['1000', '1003', '2045'],
 		},
-		MC: {
+		{
+			code: 'MC',
 			latitude: 43.47207511,
 			longitude: -80.54394739,
 			name: 'Mathematics & Computer Building',
+			numberOfRooms: 5,
+			rooms: ['1000', '1003', '2045', '4046', '6034'],
 		},
-	},
+		{
+			code: 'QNC',
+			latitude: 43.4712484,
+			longitude: -80.54419245,
+			numberOfRooms: 6,
+			name: 'Mike & Ophelia Lazaridis Quantum-Nano Centre',
+			rooms: ['1000', '1003', '2045', '4046', '5001', '6034'],
+		},
+	],
 }, action) => {
 	const { payload } = action;
 	switch (action.type) {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import MapView from './mapview';
+import ListView from './listview';
+import './style.css';
 
 /** */
 class ResultPage extends Component {
@@ -9,12 +11,6 @@ class ResultPage extends Component {
 	 * Called before component is mounted
 	 */
 	componentWillMount() {
-		console.log('ResultPage', this.props);
-	}
-
-	/** */
-	shouldComponentUpdate() {
-		console.log('ResultPage update', this.props);
 	}
 
 	/** */
@@ -22,14 +18,19 @@ class ResultPage extends Component {
 		const { availableRooms } = this.props;
 		return (
 			<div>
-				<MapView availableRooms={availableRooms} />
+				<div className="mapview">
+					<MapView availableRooms={availableRooms} />
+				</div>
+				<div className="listview">
+					<ListView className="listview" availableRooms={availableRooms} />
+				</div>
 			</div>
 		);
 	}
 }
 
 ResultPage.propTypes = {
-	availableRooms: PropTypes.shape(),
+	availableRooms: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default ResultPage;
