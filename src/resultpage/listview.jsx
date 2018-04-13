@@ -25,6 +25,7 @@ class ListView extends PureComponent {
 		nextProps.availableRooms.forEach(() => { listOpenState.push(true); });
 		return {
 			...prevState,
+			toggled: true,
 			listOpenState,
 		};
 	}
@@ -35,7 +36,6 @@ class ListView extends PureComponent {
 	constructor() {
 		super();
 		this.state = {
-			orderBy: 1,
 			toggled: true,
 		};
 	}
@@ -71,25 +71,20 @@ class ListView extends PureComponent {
 	}
 
 	handleOrderByChange = (event, index, value) => {
-		this.setState({ orderBy: value });
+		this.props.changeOrderBy(value);
 	};
 
 	/**
 	 * Render method
 	 */
 	render() {
-		let { availableRooms } = this.props;
-		if (this.state.orderBy === 1) {
-			availableRooms = availableRooms.sort((first, second) => second.numberOfRooms - first.numberOfRooms);
-		} else if (this.state.orderBy === 3) {
-			availableRooms = availableRooms.sort((first, second) => first.code.localeCompare(second.code));
-		}
+		const { availableRooms } = this.props;
 		return (
 			<div className="listview-container">
 				<Paper className="listview-header">
 					<SelectField
 						floatingLabelText="Order By"
-						value={this.state.orderBy}
+						value={this.props.orderBy}
 						onChange={this.handleOrderByChange}
 						style={{ width: 150 }}
 					>
@@ -148,6 +143,8 @@ class ListView extends PureComponent {
 
 ListView.propTypes = {
 	availableRooms: PropTypes.arrayOf(PropTypes.shape()),
+	changeOrderBy: PropTypes.func,
+	orderBy: PropTypes.number,
 };
 
 export default ListView;

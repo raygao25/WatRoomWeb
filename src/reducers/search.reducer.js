@@ -5,6 +5,7 @@ import {
 	setStartTime,
 	setEndTime,
 	searchAvailableRooms,
+	changeOrderBy,
 } from '../actions/action';
 
 
@@ -101,6 +102,7 @@ const result = (state = {
 			rooms: ['1000', '1003', '2045', '4046', '5001', '6034'],
 		},
 	],
+	orderBy: 1,
 }, action) => {
 	const { payload } = action;
 	switch (action.type) {
@@ -108,6 +110,11 @@ const result = (state = {
 			return {
 				...state,
 				availableRooms: payload,
+			};
+		case changeOrderBy.type:
+			return {
+				...state,
+				orderBy: payload,
 			};
 		default:
 			return state;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-import MapView from './mapview';
-import ListView from './listview';
+import MapView from './mapview.container';
+import ListView from './listview.container';
 import './style.css';
 
 /** */
@@ -15,22 +14,17 @@ class ResultPage extends Component {
 
 	/** */
 	render() {
-		const { availableRooms } = this.props;
 		return (
 			<div>
 				<div className="mapview">
-					<MapView availableRooms={availableRooms} />
+					<MapView />
 				</div>
 				<div className="listview">
-					<ListView className="listview" availableRooms={availableRooms} />
+					<ListView className="listview" />
 				</div>
 			</div>
 		);
 	}
 }
-
-ResultPage.propTypes = {
-	availableRooms: PropTypes.arrayOf(PropTypes.shape()),
-};
 
 export default ResultPage;
