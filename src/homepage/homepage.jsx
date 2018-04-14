@@ -5,6 +5,8 @@ import TimePicker from 'material-ui/TimePicker';
 import FontIcon from 'material-ui/FontIcon';
 import Button from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import './homepage.css';
 
@@ -13,6 +15,16 @@ import './homepage.css';
  * Home page
  */
 class HomePage extends Component {
+	/**
+	 * Constructor
+	 */
+	constructor() {
+		super();
+		this.state = {
+			selectedBuildings: [],
+		};
+	}
+
 	/**
 	 * Method to handle date change
 	 */
@@ -39,7 +51,7 @@ class HomePage extends Component {
 	 */
 	render() {
 		const {
-			today, startTime, endTime, isReadyToSearch, search, loading,
+			today, startTime, endTime, isReadyToSearch, search, loading, buildingList,
 		} = this.props;
 		return (
 			<div className="HomePage">
@@ -76,11 +88,21 @@ class HomePage extends Component {
 						}}
 					/>
 				</div>
+				<SelectField
+					multiple
+					hintText="Select Buildings"
+					value={this.state.selectedBuildings}
+					onChange={(event, index, values) => this.setState({ selectedBuildings: values })}
+				>
+					{buildingList.map((building) => (
+						<MenuItem key={`buildingList${building}`} value={building} primaryText={building} />
+					))}
+				</SelectField>
 				<Button
 					label="Search"
 					labelPosition="before"
 					primary
-					onClick={() => search()}
+					onClick={() => search(this.state.selectedBuildings)}
 					disabled={!isReadyToSearch || loading}
 					disabledBackgroundColor="#80DEEA"
 					overlayStyle={{
@@ -125,6 +147,7 @@ HomePage.propTypes = {
 	setEndTime: PropTypes.func.isRequired,
 	search: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
+	buildingList: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default HomePage;

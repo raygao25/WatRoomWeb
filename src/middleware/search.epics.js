@@ -23,17 +23,33 @@ const url = 'https://us-central1-classroom-finder-245e0.cloudfunctions.net/query
  */
 const searchAvailableRoomsEpic = (action$, store) =>
 	action$.ofType(searchAvailableRooms.START)
-		.mergeMap(() => {
+		.mergeMap((action) => {
+			const { payload } = action;
+
 			const { searchParams } = store.getState();
 			const { weekday } = searchParams;
 			const startTimeIndex = ((searchParams.startTime.getHours() - 8) * 6) + (searchParams.startTime.getMinutes() / 10);
 			const length = ((searchParams.endTime.getHours() - searchParams.startTime.getHours()) * 6) +
 			((searchParams.endTime.getMinutes() - searchParams.startTime.getMinutes()) / 10);
-			return ajax.getJSON(`${url}?weekday=${weekday}&startTime=${startTimeIndex}&length=${length}`)
+
+			const basicQueryString = `?weekday=${weekday}&startTime=${startTimeIndex}&length=${length}`;
+
+			let finalUrl = '';
+
+			if (payload.length > 0) { // a building list is provided
+				const buildingQueryString = payload.reduce((acc, cur) => `${acc}&buildings=${cur}`, '');
+				finalUrl = `https://us-central1-classroom-finder-245e0.cloudfunctions.net/queryBuildingAvailableRooms
+				${basicQueryString}${buildingQueryString}`;
+				console.log('url', finalUrl);
+			} else {
+				finalUrl = `https://us-central1-classroom-finder-245e0.cloudfunctions.net/queryAllAvailableRooms${basicQueryString}`;
+			}
+
+			return ajax.getJSON(finalUrl)
 				.map((result) =>
 					searchAvailableRooms.success(result.availableRoomsSet))
 				.catch((err) => Observable.of({
-					type: 'FETCH_TAGS_FAILED',
+					type: 'FETCH_ROOMS_FAILED',
 					payload: err.xhr.response,
 					error: true,
 				}));

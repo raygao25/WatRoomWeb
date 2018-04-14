@@ -22,6 +22,9 @@ const initialSearchState = () => {
 		date: todayWeekday !== 0 && todayWeekday !== 6 ? today : undefined,
 		startTime: undefined,
 		endTime: undefined,
+		buildingList: ['AHS', 'AL', 'ARC', 'B1', 'B2', 'BMH', 'C2', 'CGR', 'CPH', 'DC', 'DMS', 'DWE', 'E2', 'E3', 'E5', 'E6', 'EC4', 'EC5', 'ECH',
+			'EIT', 'ERC', 'ESC', 'EV1', 'EV2', 'EV3', 'HH', 'IHB', 'LIB', 'M3', 'MC', 'ML', 'OPT', 'PAS', 'PHR', 'PHY', 'QNC', 'RCH', 'REN', 'SJ1',
+			'SJ2', 'STC'],
 	};
 };
 

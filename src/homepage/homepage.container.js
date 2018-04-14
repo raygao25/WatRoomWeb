@@ -21,6 +21,7 @@ const mapStateToProps = (state) => ({
 	startTime: state.searchParams.startTime,
 	endTime: state.searchParams.endTime,
 	loading: state.loading.loading,
+	buildingList: state.searchParams.buildingList,
 });
 
 /**
