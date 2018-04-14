@@ -56,12 +56,13 @@ class HomePage extends Component {
 		return (
 			<div className="HomePage">
 				<DatePicker
+					className="DatePicker"
 					hintText="Date"
 					autoOk
 					defaultDate={today}
-					style={{ textAlign: 'center' }}
 					shouldDisableDate={(date) => date.getDay() === 0 || date.getDay() === 6} // Disable weekends
 					onChange={this.handleDateChange}
+					textFieldStyle={{ width: '100%', textAlign: 'center' }}
 				/>
 				<div className="TimePicker">
 					<TimePicker
@@ -71,11 +72,10 @@ class HomePage extends Component {
 						format="24hr"
 						minutesStep={10}
 						onChange={this.handleStartTimeChange}
-						style={{
-							display: 'inline-block',
-						}}
+						style={{ display: 'inline-block', width: '220px' }}
+						textFieldStyle={{ width: '100%' }}
 					/>
-					<FontIcon className="material-icons" style={{ paddingLeft: 30, paddingRight: 30 }}>arrow_forward</FontIcon>
+					<FontIcon className="material-icons" style={{ width: '60px', textAlign: 'center' }}>arrow_forward</FontIcon>
 					<TimePicker
 						hintText="End time"
 						autoOk
@@ -83,14 +83,14 @@ class HomePage extends Component {
 						format="24hr"
 						minutesStep={10}
 						onChange={this.handleEndTimeChange}
-						style={{
-							display: 'inline-block',
-						}}
+						style={{ display: 'inline-block', width: '220px' }}
+						textFieldStyle={{ width: '100%' }}
 					/>
 				</div>
 				<SelectField
+					className="BuildingSelector"
 					multiple
-					hintText="Select Buildings"
+					hintText="Buildings"
 					value={this.state.selectedBuildings}
 					onChange={(event, index, values) => this.setState({ selectedBuildings: values })}
 				>
@@ -99,6 +99,7 @@ class HomePage extends Component {
 					))}
 				</SelectField>
 				<Button
+					className="SearchButton"
 					label="Search"
 					labelPosition="before"
 					primary
@@ -107,10 +108,6 @@ class HomePage extends Component {
 					disabledBackgroundColor="#80DEEA"
 					overlayStyle={{
 						paddingLeft: loading ? 34 : 0,
-					}}
-					style={{
-						width: 200,
-						marginTop: 30,
 					}}
 				>
 					{loading && <CircularProgress

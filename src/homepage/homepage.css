@@ -1,8 +1,37 @@
 .HomePage {
-	text-align: center;
-	padding-top: 200px;
+    position: relative;
+    top: 200px;
+    right: 0;
+	left: 0;
+	width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-/* .TimePicker {
-	width: 500px;
-} */
+.DatePicker {
+    max-width: 250px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.TimePicker {
+	padding-top: 5px;
+}
+
+.BuildingSelector {
+	padding-top: 5px;
+	display: block !important;
+	max-width: 250px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.SearchButton {
+	margin-top: 15px;
+	display: block !important;
+	max-width: 250px;
+    margin-right: auto;
+    margin-left: auto;
+}
